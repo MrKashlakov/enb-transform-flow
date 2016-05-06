@@ -1,0 +1,24 @@
+{
+  "name": "enb-transform-flow",
+  "version": "0.0.1",
+  "description": "Enb tarnsformation flow tech",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrKashlakov/enb-transform-flow.git"
+  },
+  "peerDependencies": {
+    "enb": "1.x"
+  },
+  "author": "Ilya Kashlakov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrKashlakov/enb-transform-flow/issues"
+  },
+  "homepage": "https://github.com/MrKashlakov/enb-transform-flow#readme",
+  "dependencies": {
+    "lodash": "^4.11.2"
+  }
+}
