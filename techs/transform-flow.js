@@ -11,6 +11,7 @@
  * * *Function[] | Function* **transformators** - Набор преобразователей исходного кода
  *
  * **Пример**
+ *
  * ```javascript
  * [ require('enb-transform-flow/techs/tarnsform-flow'), {
  * 		sourceSuffixes: ['js'],
@@ -23,7 +24,9 @@
  * ```
  *
  * **Пример с очередями**
+ *
  * Можно использовать очередь для выполнения задач в параллельных подпроцессах. Подходит для выполнения тяжелых синхронных трансформаций.
+ *
  * ```javascript
  * [ require('enb-transform-flow/techs/tarnsform-flow'), {
  * 		sourceSuffixes: ['js'],
