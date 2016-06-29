@@ -17,7 +17,7 @@
 **Пример**
 
 ```javascript
-[ require('enb-transform-flow/techs/tarnsform-flow'), {
+[ require('enb-transform-flow/techs/transform-flow'), {
     sourceSuffixes: ['js'],
     target: '_?.js',
     transformators: [
@@ -32,7 +32,7 @@
 Можно использовать очередь для выполнения задач в параллельных подпроцессах. Подходит для выполнения тяжелых синхронных трансформаций.
 
 ```javascript
-[ require('enb-transform-flow/techs/tarnsform-flow'), {
+[ require('enb-transform-flow/techs/transform-flow'), {
     sourceSuffixes: ['js'],
     target: '_?.js',
     transformators: [
