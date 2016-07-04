@@ -16,8 +16,8 @@
  * 		sourceSuffixes: ['js'],
  * 		target: '_?.js',
  * 		transformators: [
- * 			function (params) { return { code: require('babel').transform(source).code }; },
- * 			function (params) { return { code: require('uglify-js').minify(source).code }; }
+ * 			function (params) { return { code: require('babel').transform(params.code).code }; },
+ * 			function (params) { return { code: require('uglify-js').minify(params.code).code }; }
  * 		]
  * } ]
  * ```
