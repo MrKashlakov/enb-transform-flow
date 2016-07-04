@@ -45,6 +45,17 @@
      sourceSuffixes: ['js'],
      target: '_?.js',
      transformators: [
+     
+        /**
+          * Функция-трансформатор, запускающая обработку бабелем полученного кода
+          *
+          * @param {Object} params Параметры трансформатора
+          * @param {String} params.code Код, который нужно преобразовать
+          * @param {Object} params.queue Очередь для выполнения тасок в параллельных подпроцессах
+          * @param {Object} params.map sourcemap с предыдущего преобразования
+          * @param {Object} params.filename Имя файла
+          * @returns {Promise}
+          */
          function (params) {
             var code = params.code;
             var queue = params.queue;
@@ -58,6 +69,17 @@
                 return compiledObj.code;
             });
          },
+         
+         /**
+          * Функция-минификатор, запускающая минификацию uglifyjs'ом полученного кода
+          *
+          * @param {Object} params Параметры трансформатора
+          * @param {String} params.code Код, который нужно преобразовать
+          * @param {Object} params.queue Очередь для выполнения тасок в параллельных подпроцессах
+          * @param {Object} params.map sourcemap с предыдущего преобразования
+          * @param {Object} params.filename Имя файла
+          * @returns {Promise}
+          */
          function (params) {
             var code = params.code;
             var queue = params.queue;
