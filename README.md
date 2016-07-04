@@ -4,7 +4,7 @@
 
 ## Установка
 
-``` npm i enb-transform-flow ```
+``` npm i enb-ttransform-flow ```
 
 ## Использование 
 
@@ -17,26 +17,38 @@
 **Пример**
 
 ```javascript
-[ require('enb-transform-flow/techs/transform-flow'), {
-    sourceSuffixes: ['js'],
-    target: '_?.js',
-    transformators: [
-      function (source) { return require('babel').transform(source).code; },
-      function (source) { return require('uglify-js').minify(source).code; }
-    ]
+[ require('enb-transform-flow/techs/tarnsform-flow'), {
+		sourceSuffixes: ['js'],
+		target: '?.js',
+		transformators: [
+			function (params) {
+			    var result = require('babel').transform(params.code);
+			    return {
+			        code: result.code; 
+			        map: result.map
+			    }
+			},
+			function (params) {
+			    var result = require('uglify-js').minify(params.code);
+			    return {
+			        code: result.code; 
+			        map: result.map
+			    }
+			}
+		]
 } ]
 ```
 
-**Пример с очередями**
-
-Можно использовать очередь для выполнения задач в параллельных подпроцессах. Подходит для выполнения тяжелых синхронных трансформаций.
 
 ```javascript
-[ require('enb-transform-flow/techs/transform-flow'), {
-    sourceSuffixes: ['js'],
-    target: '_?.js',
-    transformators: [
-        function (code, queue) {
+[ require('enb-transform-flow/techs/tarnsform-flow'), {
+     sourceSuffixes: ['js'],
+     target: '_?.js',
+     transformators: [
+         function (params) {
+            var code = params.code;
+            var queue = params.queue;
+
             var compilerFilename = require('path').resolve(__dirname, './worker-tasks/babel-transformator');
             return queue.push(compilerFilename, code, { 
                 externalHelpers: 'var',
@@ -45,15 +57,18 @@
             }).then(function (compiledObj) {
                 return compiledObj.code;
             });
-        },
-        function (code, queue) {
+         },
+         function (params) {
+            var code = params.code;
+            var queue = params.queue;
+
             var compilerFilename = require('path').resolve(__dirname, './worker-tasks/uglifyjs-minifier');
             return queue.push(compilerFilename, code, {
-                fromString: true
+                  fromString: true
             }).then(function (compiledObj) {
-                return compiledObj.code;
+                  return compiledObj.code;
             });
-        }
-    ]
+         }
+     ]
 } ]
 ```
