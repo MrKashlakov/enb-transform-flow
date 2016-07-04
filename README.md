@@ -53,20 +53,26 @@
           * @param {String} params.code Код, который нужно преобразовать
           * @param {Object} params.queue Очередь для выполнения тасок в параллельных подпроцессах
           * @param {Object} params.map sourcemap с предыдущего преобразования
-          * @param {Object} params.filename Имя файла
+          * @param {String} params.filename Имя файла
           * @returns {Promise}
           */
          function (params) {
-            var code = params.code;
-            var queue = params.queue;
-
             var compilerFilename = require('path').resolve(__dirname, './worker-tasks/babel-transformator');
-            return queue.push(compilerFilename, code, { 
+            var relativeFilename = "/" + path.relative(process.cwd(), params.filename);
+    
+            return params.queue.push(compilerFilename, params.code, {
                 externalHelpers: 'var',
                 ast: false,
-                blacklist: ['useStrict']
+                blacklist: ['useStrict'],
+                sourceMaps: true,
+                sourceFileName: relativeFilename,
+                filename: params.filename,
+                filenameRelative: relativeFilename
             }).then(function (compiledObj) {
-                return compiledObj.code;
+                return {
+                    code: compiledObj.code,
+                    map: compiledObj.map
+                };
             });
          },
          
@@ -77,7 +83,7 @@
           * @param {String} params.code Код, который нужно преобразовать
           * @param {Object} params.queue Очередь для выполнения тасок в параллельных подпроцессах
           * @param {Object} params.map sourcemap с предыдущего преобразования
-          * @param {Object} params.filename Имя файла
+          * @param {String} params.filename Имя файла
           * @returns {Promise}
           */
          function (params) {
