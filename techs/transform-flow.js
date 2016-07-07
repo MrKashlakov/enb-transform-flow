@@ -150,19 +150,19 @@ module.exports = require('enb/lib/build-flow').create()
 				var uniqConcat = require('unique-concat');
 				var sourcemap = require('../lib/sourcemap');
 				var concat = new Concat(true, target, '\n');
-				var concatArgs = [];
-
-				_.each(res, function(result) {
+				
+				var concatArgs = _.map(res, function(result) {
 					var node;
 					if (result.map) {
-						concatArgs.push([result.filename, result.code, result.map]);
+						return [result.filename, result.code, result.map];
 					} else {
 						node = sourcemap.generate(result.filename, result.code);
-						concatArgs.push([
+						
+						return [
 							sourcemap.normalizeFileName(result.filename),
 							result.code,
 							JSON.parse(node.map.toString())
-						]);
+						];
 					}
 				});
 

@@ -4,7 +4,7 @@
 
 ## Установка
 
-``` npm i enb-ttransform-flow ```
+``` npm i enb-transform-flow ```
 
 ## Использование 
 
