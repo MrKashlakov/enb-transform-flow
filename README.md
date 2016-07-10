@@ -1,5 +1,7 @@
 # enb-transform-flow
 
+[![Build Status](https://travis-ci.org/MrKashlakov/enb-transform-flow.svg?branch=master)](https://travis-ci.org/MrKashlakov/enb-transform-flow)
+
 Позволяет преобразовать исходный код с помощью произвольного набора преобразователей
 
 ## Установка
