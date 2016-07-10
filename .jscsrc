@@ -1,0 +1,51 @@
+{
+	"excludeFiles": [
+		".git",
+		"node_modules"
+	],
+	"disallowMixedSpacesAndTabs": true,
+	"requireSpaceBeforeKeywords": [
+		"else",
+		"while",
+		"catch"
+	],
+	"requireSpaceAfterKeywords": [
+		"do",
+		"for",
+		"if",
+		"else",
+		"switch",
+		"case",
+		"try",
+		"catch",
+		"void",
+		"while",
+		"with",
+		"return",
+		"typeof"
+	],
+	"requireSpaceBeforeBlockStatements": true,
+	"requireCamelCaseOrUpperCaseIdentifiers": true,
+	"disallowKeywords": [
+		"with"
+	],
+	"disallowMultipleLineStrings": true,
+	"disallowSpacesInCallExpression": true,
+	"validateParameterSeparator": ", ",
+	"disallowSpacesInsideArrayBrackets": true,
+	"disallowSpacesInsideParentheses": true,
+	"disallowMultipleVarDecl": true,
+	"disallowNewlineBeforeBlockStatements": true,
+	"disallowOperatorBeforeLineBreak": [
+		"+",
+		"?",
+		":"
+	],
+	"requireCommaBeforeLineBreak": true,
+	"requireCurlyBraces": true,
+	"requireLineFeedAtFileEnd": true,
+	"disallowTrailingComma": true,
+	"disallowEmptyBlocks": true,
+	"disallowSpaceAfterObjectKeys": true,
+	"requireSpaceBeforeObjectValues": true
+}

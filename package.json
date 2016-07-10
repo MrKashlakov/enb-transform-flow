@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Enb tarnsformation flow tech",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "jshint . && jscs ."
   },
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   "peerDependencies": {
     "enb": "1.x"
   },
-  "author": "Ilya Kashlakov",
+  "author": "Ilya Kashlakov <i.kashlakov@yandex.ru>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MrKashlakov/enb-transform-flow/issues"
@@ -20,5 +20,9 @@
   "homepage": "https://github.com/MrKashlakov/enb-transform-flow#readme",
   "dependencies": {
     "lodash": "^4.11.2"
+  },
+  "devDependencies": {
+    "jscs": "^3.0.6",
+    "jshint": "^2.9.2"
   }
 }

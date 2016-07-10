@@ -1,0 +1,14 @@
+{
+	"bitwise": true,
+	"curly": true,
+	"eqeqeq": true,
+	"freeze": true,
+	"latedef": "nofunc",
+	"noarg": true,
+	"nonew": true,
+	"undef": true,
+	"unused": "vars",
+	"strict": true,
+	"maxparams": 4,
+	"node": true
+}
