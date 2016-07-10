@@ -2,7 +2,7 @@
 
 [![NPM version](http://img.shields.io/npm/v/enb-transform-flow.svg?style=flat)](http://www.npmjs.org/package/enb-transform-flow)
 [![Build Status](https://travis-ci.org/MrKashlakov/enb-transform-flow.svg?branch=master)](https://travis-ci.org/MrKashlakov/enb-transform-flow)
-[![David](https://img.shields.io/MrKashlakov/enb-transform-flow.svg)](https://david-dm.org/MrKashlakov/enb-transform-flow)
+[![David](https://david-dm.org/MrKashlakov/enb-transform-flow.svg)](https://david-dm.org/MrKashlakov/enb-transform-flow)
 
 Позволяет преобразовать исходный код с помощью произвольного набора преобразователей
 
