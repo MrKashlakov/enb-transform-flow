@@ -4,7 +4,7 @@
 
 ## Установка
 
-``` npm i enb-transform-flow ```
+``` npm i enb-ttransform-flow ```
 
 ## Использование 
 
@@ -25,14 +25,18 @@
 			    var result = require('babel').transform(params.code);
 			    return {
 			        code: result.code; 
-			        map: result.map
+			        data: {
+			            map: result.map
+			        }			        
 			    }
 			},
 			function (params) {
 			    var result = require('uglify-js').minify(params.code);
 			    return {
 			        code: result.code; 
-			        map: result.map
+			         data: {
+                        map: result.map
+                     }
 			    }
 			}
 		]
@@ -71,7 +75,9 @@
             }).then(function (compiledObj) {
                 return {
                     code: compiledObj.code,
-                    map: compiledObj.map
+                    data: {
+                        map: compiledObj.map
+                    }    
                 };
             });
          },
@@ -94,7 +100,9 @@
             return queue.push(compilerFilename, code, {
                   fromString: true
             }).then(function (compiledObj) {
-                  return compiledObj.code;
+                  return {
+                    code: compiledObj.code
+                  }  
             });
          }
      ]

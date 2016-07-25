@@ -39,7 +39,12 @@
  *                             ast: false,
  *                             blacklist: ['useStrict']
  *                         }).then(function (compiledObj) {
- *                             return compiledObj.code;
+ *                             return {
+ *                                code: compiledObj.code,
+ *                                data: {
+ *                                    map: compiledObj.map
+ *                                }
+ *                             };
  *                         });
  *                      },
  *                      function (params) {
@@ -50,7 +55,9 @@
  *                       return queue.push(compilerFilename, code, {
  *                               fromString: true
  *                       }).then(function (compiledObj) {
- *                               return compiledObj.code;
+ *                            return {
+ *                                code: compiledObj.code
+ *                            };
  *                       });
  *                    }
  *              ]
@@ -63,6 +70,7 @@ module.exports = require('enb/lib/build-flow').create()
 		.defineRequiredOption('target')
 		.defineRequiredOption('sourceSuffixes')
 		.defineRequiredOption('transformators')
+		.defineOption('reducer')
 		.useFileList([''])
 		.builder(function (files) {
 			var _this = this;
@@ -74,7 +82,6 @@ module.exports = require('enb/lib/build-flow').create()
 			var jobQueue = sharedResources.jobQueue;
 			var EOL = require('os').EOL;
 			var Buffer = require('buffer').Buffer;
-			var hasMap = false;
 			var target = this.node.resolvePath(this._target);
 
 			// Обрабатываем каждый исходный файл
@@ -104,7 +111,7 @@ module.exports = require('enb/lib/build-flow').create()
 
 									return transformator({
 										code: code,
-										map: result.map,
+										data: result.data,
 										queue: jobQueue,
 										filename: file.fullname
 									});
@@ -116,11 +123,6 @@ module.exports = require('enb/lib/build-flow').create()
 								var dataToCache = JSON.stringify(result);
 
 								return fileCache.put(file.fullname, dataToCache).then(function () {
-									// Если есть, хоть одна карта, то ставим признак, пост-обработки карт
-									if (result.map) {
-										hasMap = true;
-									}
-
 									result.filename = file.fullname;
 									return result;
 								});
@@ -131,54 +133,20 @@ module.exports = require('enb/lib/build-flow').create()
 					// Из кэша приходит строка, которую нужно преобразовать в объект
 					codeFromCache = JSON.parse(codeFromCache);
 
-					// Если есть, хоть одна карта, то ставим признак, пост-обработки карт
-					if (codeFromCache.map) {
-						hasMap = true;
-					}
-
 					codeFromCache.filename = file.fullname;
 					return codeFromCache;
 				});
 			})).then(function (res) {
-				if (!hasMap) {
-					return _.map(res, function (obj) {
-						return obj.code;
-					}).join(EOL);
+				// Если передана функция обработки результата, то используем ее
+				if (_this._reducer) {
+					return _this._reducer({
+						result: res,
+						target: target
+					});
 				}
 
-				var Concat = require('concat-with-sourcemaps');
-				var uniqConcat = require('unique-concat');
-				var sourcemap = require('../lib/sourcemap');
-				var concat = new Concat(true, target, '\n');
-				
-				var concatArgs = _.map(res, function(result) {
-					var node;
-					if (result.map) {
-						return [result.filename, result.code, result.map];
-					} else {
-						node = sourcemap.generate(result.filename, result.code);
-						
-						return [
-							sourcemap.normalizeFileName(result.filename),
-							result.code,
-							JSON.parse(node.map.toString())
-						];
-					}
-				});
-
-				concatArgs.forEach(function(arg) {
-					concat.add.apply(concat, arg);
-				});
-
-				var fs = require('fs');
-				var path = require('path');
-				var sourceMapFile = target + '.map';
-				fs.writeFileSync(sourceMapFile, concat.sourceMap);
-
-				return [
-					concat.content,
-					'//# sourceMappingURL=' + path.basename(sourceMapFile) + '\n'
-				].join('\n');
+				// Иначе, просто сливаем код
+				return _.map(res, 'code').join(EOL);
 			});
 		})
 		.createTech();
